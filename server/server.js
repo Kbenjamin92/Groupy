@@ -13,9 +13,7 @@ app.use(express.json());
 
 app.get('/', async (req, res) => {
     try {
-        const users = await prisma.users.findMany({
-            where: { username: "sarah_myers" }
-        })
+        const users = await prisma.users.findMany()
         res.status(200).json(users);
     } catch(err) {
         console.error(err.message)
