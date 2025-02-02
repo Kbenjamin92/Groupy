@@ -6,7 +6,8 @@ import './App.css'
 
 interface Users {
   id: number,
-  username: string,
+  firstName: string,
+  lastName: string
 }
 
 const App = () => {
@@ -34,8 +35,8 @@ const App = () => {
         </a>
         <h1>Users List</h1>
         <ul>
-          { users.map((user) => (
-            <li key={ user.id }>{ user.username }</li>
+          { users.map(({ id, firstName, lastName }) => (
+            <li key={ id }>{ firstName } { lastName }</li>
           ))}
         </ul>
       </div>
