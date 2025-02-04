@@ -22,7 +22,7 @@ router.post('/login', async (req, res) => {
     const isMatch = bcrypt.compare(password, user.password);
 
     if (!isMatch) {
-        return res.status(400).json({ message: 'Invalid credentials' })
+        return res.status(400).json({ message: 'Incorrect Username and/or Password. Try again or reset your password.' })
     }
     // generate token
     const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, {
