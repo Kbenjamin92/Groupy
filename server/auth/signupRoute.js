@@ -26,7 +26,7 @@ router.post('/signup',
             res.status(400).json({ message: 'All fields are required!' });
         }
         // checking to see if user exists
-        const existingUser = await prisma.users.findFirst({
+        const existingUser = await prisma.users.findUnique({
             where: {  
                 username: username,
                 email: email,
@@ -34,7 +34,7 @@ router.post('/signup',
                 lastName: lastName 
             }
         });
-        if (existingUser) {
+        if (!existingUser) {
             res.status(400).json({ message: 'User already exists!' });
         }
         // hash the password
