@@ -11,9 +11,9 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.use('/sign-up', signupRoute);
+app.use('/signup', signupRoute);
 
-// testing endpoints
+// // testing endpoints
 app.get('/', async (req, res) => {
     try {
         const users = await prisma.users.findMany()
@@ -24,17 +24,17 @@ app.get('/', async (req, res) => {
     }
 })
 
-// testing endpoint
-app.post('/create-user', async (req, res) => {
-    const userBody = req.body;
-    try {
-        const createUser = await prisma.users.create({
-            data: userBody
-        })
-        res.status(200).json(createUser)
-    } catch(error) {
-        console.log('Theres an issue with your post', error.message)
-    }
-})
+// // testing endpoint
+// app.post('/create-user', async (req, res) => {
+//     const userBody = req.body;
+//     try {
+//         const createUser = await prisma.users.create({
+//             data: userBody
+//         })
+//         res.status(200).json(createUser)
+//     } catch(error) {
+//         console.log('Theres an issue with your post', error.message)
+//     }
+// })
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

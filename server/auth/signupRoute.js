@@ -1,20 +1,58 @@
 import express from 'express';
+import bycrypt from 'bcryptjs';
+import { body, validationResult } from 'express-validator';
 import prisma from '../prisma.js'
 
 const router = express.Router();
 
-router.post('/sign-up', async (req, res) => {
-    const newUser = req.body;
-    try {
-        const createUser = await prisma.user.create({
-            data: newUser
-        });
-        res.status(200).json(createUser);
-    } catch(error) {
-        console.log('Was unable to create new user', error.message)
-        res.status(500).json(error.message)
-    }
+router.post('/signup', 
+    [   
+        body('firstName').isString(),
+        body('lastName').isString(),
+        body('email').isEmail().withMessage('Invalid email format'),
+        body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters long')
+    ],
+    async (req, res) => {
+        try {
+            const errors = validationResult(req);
 
-})
+            if (!errors) {
+                return res.status(400).json({ errors: errors.arrays() });
+            }
+
+            const { firstName, lastName, email, username, password } = req.body;
+
+            // validate user input
+            if (!email || !username || !password) {
+                res.status(400).json({ message: 'All fields are required!' });
+            }
+            // checking to see if user exists
+            const existingUser = users.prisma.findFirst({
+                where: { email: email }
+            });
+            if (existingUser) {
+                res.status(400).json({ message: 'User already exists!' });
+            }
+            // hash the password
+            const salt = bycrypt.genSalt(10);
+            const hashPassword = await bycrypt.hash(password, salt);
+
+            const newUser = {
+                username: username,
+                email: email,
+                password: hashPassword,
+                firstName: firstName,
+                lastName: lastName,
+            }
+            await prisma.users.create({
+                data: newUser
+        });
+            res.status(201).json({ message: 'User successfully created!' });
+        } catch(error) {
+            console.log('Unable to create new user', error.message);
+            res.status(500).json(error.message)
+        }
+
+});
 
 export default router;
