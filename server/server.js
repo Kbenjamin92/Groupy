@@ -11,7 +11,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.use('/signup', signupRoute);
+app.post('/signup', signupRoute);
 
 // // testing endpoints
 app.get('/', async (req, res) => {
@@ -22,19 +22,6 @@ app.get('/', async (req, res) => {
         console.error(err.message)
         res.status(500).send('Server Error')
     }
-})
-
-// // testing endpoint
-// app.post('/create-user', async (req, res) => {
-//     const userBody = req.body;
-//     try {
-//         const createUser = await prisma.users.create({
-//             data: userBody
-//         })
-//         res.status(200).json(createUser)
-//     } catch(error) {
-//         console.log('Theres an issue with your post', error.message)
-//     }
-// })
+});
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

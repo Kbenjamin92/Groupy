@@ -13,37 +13,41 @@ router.post('/signup',
         body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters long')
     ],
     async (req, res) => {
-        try {
-            const errors = validationResult(req);
+        const errors = validationResult(req);
 
-            if (!errors) {
-                return res.status(400).json({ errors: errors.arrays() });
-            }
+        if (!errors) {
+            return res.status(400).json({ errors: errors.arrays() });
+        }
 
-            const { firstName, lastName, email, username, password } = req.body;
+        const { firstName, lastName, email, username, password } = req.body;
 
-            // validate user input
-            if (!email || !username || !password) {
-                res.status(400).json({ message: 'All fields are required!' });
-            }
-            // checking to see if user exists
-            const existingUser = users.prisma.findFirst({
-                where: { email: email }
-            });
-            if (existingUser) {
-                res.status(400).json({ message: 'User already exists!' });
-            }
-            // hash the password
-            const salt = bycrypt.genSalt(10);
-            const hashPassword = await bycrypt.hash(password, salt);
-
-            const newUser = {
+        // validate user input
+        if (!email || !username || !password) {
+            res.status(400).json({ message: 'All fields are required!' });
+        }
+        // checking to see if user exists
+        const existingUser = await prisma.users.findFirst({
+            where: {  
                 username: username,
                 email: email,
-                password: hashPassword,
                 firstName: firstName,
-                lastName: lastName,
+                lastName: lastName 
             }
+        });
+        if (existingUser) {
+            res.status(400).json({ message: 'User already exists!' });
+        }
+        // hash the password
+        const hashPassword = await bycrypt.hash(password, 10);
+
+        const newUser = {
+            username: username,
+            email: email,
+            password: hashPassword,
+            firstName: firstName,
+            lastName: lastName,
+        }
+        try {
             await prisma.users.create({
                 data: newUser
         });
@@ -52,7 +56,6 @@ router.post('/signup',
             console.log('Unable to create new user', error.message);
             res.status(500).json(error.message)
         }
-
 });
 
 export default router;
