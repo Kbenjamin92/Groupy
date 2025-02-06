@@ -1,7 +1,7 @@
 import { Grid, GridItem, Box } from '@chakra-ui/react';
 import { AuthProvider } from '@/context/AuthProvider';
 
-export const Main = () => {
+export const MainPage = () => {
   return (
     <>
     <AuthProvider>
