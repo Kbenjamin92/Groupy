@@ -9,31 +9,42 @@ import {
   Text, 
   Box } from '@chakra-ui/react'
 import { FaArrowRightLong } from "react-icons/fa6";
-import { FaShareNodes } from "react-icons/fa6";
 import { useRegister } from '@/hooks/useRegister'
 import { motion } from 'framer-motion'
-import { userSignupSchema } from '../schema/userSigupSchema';
+import { userSignupSchema } from '../../schema/userSigupSchema';
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useNavigate } from 'react-router-dom';
+import { GroupyTitle } from '../GroupyTitle';
+import { useEffect } from 'react';
 
 const MotionButton = motion.create(Button)
 
 export const Signup = () => {
-  const { createNewUser } = useRegister();
+  const navigate = useNavigate();
+  const { createNewUser, message } = useRegister();
   const { register, handleSubmit, reset, formState: { errors } } = useForm<UserSignupType>({
     resolver: zodResolver(userSignupSchema)
   });
-
-  const onSubmit: SubmitHandler<UserSignupType> = (data) => {
-    createNewUser(data);
+  const onSubmit: SubmitHandler<UserSignupType> = async (data) => {
+    await createNewUser(data);
     reset({
       firstName: '',
       lastName: '',
       username: '',
       email: '',
-      password: ''
+      password: '',
+      confirmPassword: ''
     });
-
+    if (message) {
+      navigate("/group-creation")
+    }
   }
+
+  useEffect(() => {
+    if (message) { 
+      navigate("/group-creation")
+    }
+  }, [message, navigate]);
 
   return (
     <Box 
@@ -48,16 +59,7 @@ export const Signup = () => {
          borderRadius='5px'
          padding='60px'
       >
-        <Box
-            display='flex'
-            justifyContent='center'
-            h="120px"
-          >
-          <Stack direction='row'>
-            <FaShareNodes size={60} color='dodgerblue' />
-            <Heading as="h1">Groupy</Heading>
-          </Stack>
-        </Box>
+      <GroupyTitle />
       <form onSubmit={handleSubmit(onSubmit)}>
         <Stack gap={4}>
           <Box 
@@ -117,7 +119,6 @@ export const Signup = () => {
           </Box>
             </Stack>
       </form>
-      
       </Box>
     </Box>
   )
