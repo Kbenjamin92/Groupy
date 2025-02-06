@@ -30,11 +30,9 @@ router.post('/signup',
             where: {  
                 username: username,
                 email: email,
-                firstName: firstName,
-                lastName: lastName 
             }
         });
-        if (!existingUser) {
+        if (existingUser) {
             res.status(400).json({ message: 'User already exists!' });
         }
         // hash the password
@@ -51,7 +49,7 @@ router.post('/signup',
             await prisma.users.create({
                 data: newUser
         });
-            res.status(201).json({ message: 'User successfully created!' });
+            res.status(201).json({ message: `Welcome to Groupy ${newUser.firstName}` });
         } catch(error) {
             console.log('Unable to create new user', error.message);
             res.status(500).json(error.message)

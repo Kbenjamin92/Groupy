@@ -7,8 +7,10 @@ import {
   Button, 
   Heading, 
   Text, 
-  Box } from '@chakra-ui/react'
+  Box,
+  } from '@chakra-ui/react'
   import { FaArrowRightLong } from "react-icons/fa6";
+  import { FaShareNodes } from "react-icons/fa6";
 
 export const Login = () => {
   const { register, handleSubmit } = useForm<UserLoginType>();
@@ -22,13 +24,30 @@ export const Login = () => {
     minW="100vw"
   >
      <Box
-         backgroundColor='#f5f9fc'
+         //backgroundColor='#f5f9fc'
+         boxShadow="md"
          borderRadius='5px'
-         padding='100px'
+         padding='60px'
       >
+    <Box
+      display='flex'
+      justifyContent='center'
+      h="120px"
+    >
+      <Stack direction='row'>
+        <FaShareNodes size={60} color='dodgerblue' />
+        <Heading as="h1">Groupy</Heading>
+        
+      </Stack>
+    </Box>
     <form>
       <Stack gap={4}>
-      <Heading as='h1'>Login</Heading>
+        <Box 
+          display='flex'
+          justifyContent='flex-start'
+          >
+          <Heading as='h1'>Login</Heading>
+        </Box>
         <Input 
           placeholder='Username'
           variant='subtle'
@@ -38,16 +57,23 @@ export const Login = () => {
           placeholder='Password'
           variant='subtle' 
           {...register('password')}/>
-      </Stack>
-        <Button 
-          type='submit'
-          bg='dodgerblue'
+          <Box
+            display='flex'
+            justifyContent='flex-start'
+            alignItems='flex-start'
+            gap={3}
           >
-           <FaArrowRightLong /> 
-            Login</Button>
+            <Button 
+              type='submit'
+              bg='dodgerblue'
+              >
+              <FaArrowRightLong /> 
+                Login</Button>
+            <Text>Not a member?</Text>
+            <Link to='/signup'>Sign up</Link>
+          </Box>
+      </Stack>
     </form>
-    <Text>Not a member?</Text>
-    <Link to='/signup'>Sign up</Link>
     </Box>
   </Box>
   )

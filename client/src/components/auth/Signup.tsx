@@ -1,5 +1,4 @@
-import React from 'react'
-import { useForm, SubmitHandler } from 'react-hook-form'
+import { useForm, SubmitHandler, FieldErrors } from 'react-hook-form'
 import { UserSignupType } from '@/interfaces'
 import { Link } from 'react-router-dom'
 import { 
@@ -9,11 +8,28 @@ import {
   Heading, 
   Text, 
   Box } from '@chakra-ui/react'
-  import { FaArrowRightLong } from "react-icons/fa6";
+import { FaArrowRightLong } from "react-icons/fa6";
+import { FaShareNodes } from "react-icons/fa6";
+import { useRegister } from '@/hooks/useRegister'
+import { motion } from 'framer-motion'
+
+const MotionButton = motion.create(Button)
 
 export const Signup = () => {
-  const { register, handleSubmit } = useForm<UserSignupType>();
+  const { createNewUser } = useRegister();
+  const { register, handleSubmit, reset, formState: { errors } } = useForm<UserSignupType>();
 
+  const onSubmit: SubmitHandler<UserSignupType> = (data) => {
+    createNewUser(data);
+    reset({
+      firstName: '',
+      lastName: '',
+      username: '',
+      email: '',
+      password: ''
+    });
+
+  }
 
   return (
     <Box 
@@ -24,44 +40,75 @@ export const Signup = () => {
       minW="100vw"
     >
       <Box
-         backgroundColor='#f5f9fc'
+         boxShadow='md'
          borderRadius='5px'
-         padding='100px'
+         padding='60px'
       >
-      <form>
+        <Box
+            display='flex'
+            justifyContent='center'
+            h="120px"
+          >
+          <Stack direction='row'>
+            <FaShareNodes size={60} color='dodgerblue' />
+            <Heading as="h1">Groupy</Heading>
+          </Stack>
+        </Box>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <Stack gap={4}>
-        <Heading as='h1'>Sign up</Heading>
+          <Box 
+            display='flex'
+            justifyContent='flex-start'
+            >
+            <Heading as='h1'>Sign up</Heading>
+          </Box>
           <Input 
             placeholder='First name'
-            variant='outline'
+            variant='subtle'
             w='25rem'
-            {...register('firstName')} />
+            {...register('firstName', { required: 'First name is required'})} />
+            { errors.firstName && <Text color='crimson'>{ errors.firstName?.message }</Text>}
           <Input 
             placeholder='Last name'
-            variant='outline'  
-            {...register('lastName')}/>
+            variant='subtle'  
+            {...register('lastName', { required: 'Last name is required'})}/>
+            { errors.lastName && <Text color='crimson'>{ errors.lastName?.message }</Text>}
           <Input 
             placeholder='Email'
-            variant='outline' 
-            {...register('email')}/>
+            variant='subtle' 
+            {...register('email', { required: 'Email is required'})}/>
+            { errors.email && <Text color='crimson'>{ errors.email?.message }</Text>}
           <Input 
             placeholder='Username'
-            variant='outline' 
-            {...register('username')}/>
+            variant='subtle' 
+            {...register('username', { required: 'Username is required'})}/>
+            { errors.username && <Text color='crimson'>{ errors.username?.message }</Text>}
           <Input 
             placeholder='Password'
-            variant='outline' 
-            {...register('password')}/>
-        </Stack>
-          <Button 
-            type='submit'
-            bg='dodgerblue'
-            >
-            <FaArrowRightLong />
-              Sign up</Button>
+            variant='subtle' 
+            {...register('password', { required: 'Password is required'})}/>
+            { errors.password && <Text color='crimson'>{ errors.password?.message }</Text>}
+          <Box 
+          display='flex'
+          justifyContent='flex-start'
+          alignItems='flex-start'
+          gap={3}
+          >
+            <MotionButton
+              whileTap={{ scale: 0.9 }} 
+              whileHover={{ scale: 1.1 }}
+              outline='none'
+              type='submit'
+              bg='dodgerblue'
+              >
+              <FaArrowRightLong />
+                Sign up</MotionButton>
+              <Text>Already a member?</Text>
+              <Link to='/login'>Login</Link>
+          </Box>
+            </Stack>
       </form>
-      <Text>Already a member?</Text>
-      <Link to='/login'>Login</Link>
+      
       </Box>
     </Box>
   )
