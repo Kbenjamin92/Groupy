@@ -3,7 +3,8 @@ export interface UserSignupType {
     lastName: string,
     email: string,
     username: string,
-    password: string
+    password: string,
+    confirmPassword?: string
 }
 
 export interface UserLoginType {

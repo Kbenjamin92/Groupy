@@ -1,4 +1,4 @@
-import { useForm, SubmitHandler, FieldErrors } from 'react-hook-form'
+import { useForm, SubmitHandler,  } from 'react-hook-form'
 import { UserSignupType } from '@/interfaces'
 import { Link } from 'react-router-dom'
 import { 
@@ -12,12 +12,16 @@ import { FaArrowRightLong } from "react-icons/fa6";
 import { FaShareNodes } from "react-icons/fa6";
 import { useRegister } from '@/hooks/useRegister'
 import { motion } from 'framer-motion'
+import { userSignupSchema } from '../schema/userSigupSchema';
+import { zodResolver } from '@hookform/resolvers/zod'
 
 const MotionButton = motion.create(Button)
 
 export const Signup = () => {
   const { createNewUser } = useRegister();
-  const { register, handleSubmit, reset, formState: { errors } } = useForm<UserSignupType>();
+  const { register, handleSubmit, reset, formState: { errors } } = useForm<UserSignupType>({
+    resolver: zodResolver(userSignupSchema)
+  });
 
   const onSubmit: SubmitHandler<UserSignupType> = (data) => {
     createNewUser(data);
@@ -62,32 +66,37 @@ export const Signup = () => {
             >
             <Heading as='h1'>Sign up</Heading>
           </Box>
+          { errors.firstName && <Text color='crimson'>{ errors.firstName?.message }</Text>}
           <Input 
             placeholder='First name'
             variant='subtle'
             w='25rem'
-            {...register('firstName', { required: 'First name is required'})} />
-            { errors.firstName && <Text color='crimson'>{ errors.firstName?.message }</Text>}
+            {...register('firstName')} />
+            { errors.lastName && <Text color='crimson'>{ errors.lastName?.message }</Text>}
           <Input 
             placeholder='Last name'
             variant='subtle'  
-            {...register('lastName', { required: 'Last name is required'})}/>
-            { errors.lastName && <Text color='crimson'>{ errors.lastName?.message }</Text>}
+            {...register('lastName')}/>
+            { errors.email && <Text color='crimson'>{ errors.email?.message }</Text>}
           <Input 
             placeholder='Email'
             variant='subtle' 
-            {...register('email', { required: 'Email is required'})}/>
-            { errors.email && <Text color='crimson'>{ errors.email?.message }</Text>}
+            {...register('email')}/>
+            { errors.username && <Text color='crimson'>{ errors.username?.message }</Text>}
           <Input 
             placeholder='Username'
             variant='subtle' 
-            {...register('username', { required: 'Username is required'})}/>
-            { errors.username && <Text color='crimson'>{ errors.username?.message }</Text>}
+            {...register('username')}/>
+            { errors.password && <Text color='crimson'>{ errors.password?.message }</Text>}
           <Input 
             placeholder='Password'
             variant='subtle' 
-            {...register('password', { required: 'Password is required'})}/>
-            { errors.password && <Text color='crimson'>{ errors.password?.message }</Text>}
+            {...register('password')}/>
+            { errors.confirmPassword && <Text color='crimson'>{ errors.confirmPassword?.message }</Text>}
+          <Input 
+            placeholder='Confirm Password'
+            variant='subtle' 
+            {...register('confirmPassword')}/>
           <Box 
           display='flex'
           justifyContent='flex-start'
