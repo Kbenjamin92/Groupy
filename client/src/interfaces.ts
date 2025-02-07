@@ -13,5 +13,7 @@ export interface UserLoginType {
 }
 
 export interface GroupType {
-    groupName: string
+    groupName: string,
+    groupDescription: string
+    memberEmail?: string
 }

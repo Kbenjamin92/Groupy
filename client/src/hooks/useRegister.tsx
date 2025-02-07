@@ -17,9 +17,8 @@ export const useRegister = () => {
                 headers: { "Content-Type": "application/json" },
             });
             // handle message for existing user...
-            console.log(res.data.message)
-            setMessage(res.data.message || 'User has been successfully created!');
             localStorage.setItem("message", res.data.message);
+            setMessage(res.data.message || 'User has been successfully created!');
         } catch(err: any) {
             console.error(err.response?.data || err.message);
         }
@@ -34,6 +33,7 @@ export const useRegister = () => {
             const res = await axios.post(groupCreationUrl, groupData, {
                 headers: { "Content-Type": "application/json" },
             });
+            // manage email invitation as well
             console.log(res.data.message)
             setMessage(res.data.message || 'Your Group has been successfully created!');
         } catch(err: any) {

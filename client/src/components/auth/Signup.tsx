@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useForm, SubmitHandler,  } from 'react-hook-form'
 import { UserSignupType } from '@/interfaces'
 import { Link } from 'react-router-dom'
@@ -15,7 +16,6 @@ import { userSignupSchema } from '../../schema/userSigupSchema';
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useNavigate } from 'react-router-dom';
 import { GroupyTitle } from '../GroupyTitle';
-import { useEffect } from 'react';
 
 const MotionButton = motion.create(Button)
 
@@ -39,13 +39,11 @@ export const Signup = () => {
       navigate("/group-creation")
     }
   }
-
   useEffect(() => {
-    if (message) { 
+    if (message) {
       navigate("/group-creation")
     }
   }, [message, navigate]);
-
   return (
     <Box 
       display='flex'
@@ -107,7 +105,7 @@ export const Signup = () => {
           >
             <MotionButton
               whileTap={{ scale: 0.9 }} 
-              whileHover={{ scale: 1.1 }}
+              whileHover={{ scale: 1.1, outline: 'none', border: 'none' }}
               outline='none'
               type='submit'
               bg='dodgerblue'
