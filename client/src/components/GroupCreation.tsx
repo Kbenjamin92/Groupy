@@ -2,16 +2,13 @@ import { useForm, SubmitHandler,  } from 'react-hook-form'
 import { Text, 
     Box, 
     Input, 
-    Button,
     Stack, 
     Textarea} from '@chakra-ui/react'
-import { motion } from 'framer-motion';
 import { GroupType } from '@/interfaces';
 import { FaArrowRightLong } from "react-icons/fa6";
 import { GroupyTitle } from './GroupyTitle';
 import { useRegister } from '@/hooks/useRegister';
-
-const MotionButton = motion.create(Button)
+import { GroupyButton } from './GroupyButton';
 
 export const GroupCreation = () => {
     const { createNewGroup } = useRegister();
@@ -26,7 +23,6 @@ export const GroupCreation = () => {
             memberEmail: ''
         })
     }
-
   return (
     <>
       <Box 
@@ -75,16 +71,10 @@ export const GroupCreation = () => {
                   alignItems='flex-start'
                   gap={3}
                 >
-                  <MotionButton
-                      whileTap={{ scale: 0.9 }} 
-                      whileHover={{ scale: 1.1, outline: 'none', border: 'none' }}
-                      outline='none'
-                      type='submit'
-                      bg='dodgerblue' 
-                  >
+                  <GroupyButton>
                     <FaArrowRightLong />
                       Create Group
-                  </MotionButton>
+                  </GroupyButton>
                 </Box>
             </Stack>
           </form>

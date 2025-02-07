@@ -5,23 +5,20 @@ import { Link } from 'react-router-dom'
 import { 
   Input, 
   Stack, 
-  Button, 
   Heading, 
   Text, 
   Box } from '@chakra-ui/react'
 import { FaArrowRightLong } from "react-icons/fa6";
 import { useRegister } from '@/hooks/useRegister'
-import { motion } from 'framer-motion'
 import { userSignupSchema } from '../../schema/userSigupSchema';
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useNavigate } from 'react-router-dom';
 import { GroupyTitle } from '../GroupyTitle';
-
-const MotionButton = motion.create(Button)
+import { GroupyButton } from '../GroupyButton';
 
 export const Signup = () => {
   const navigate = useNavigate();
-  const { createNewUser, message } = useRegister();
+  const { createNewUser, message, existingUserMessage} = useRegister();
   const { register, handleSubmit, reset, formState: { errors } } = useForm<UserSignupType>({
     resolver: zodResolver(userSignupSchema)
   });
@@ -35,12 +32,10 @@ export const Signup = () => {
       password: '',
       confirmPassword: ''
     });
-    if (message) {
-      navigate("/group-creation")
-    }
   }
   useEffect(() => {
-    if (message) {
+    const storedMessage = localStorage.getItem('message')
+    if (message || storedMessage) {
       navigate("/group-creation")
     }
   }, [message, navigate]);
@@ -66,6 +61,7 @@ export const Signup = () => {
             >
             <Heading as='h1'>Sign up</Heading>
           </Box>
+          { existingUserMessage ? <Text color='crimson'>{existingUserMessage}</Text> : null }
           { errors.firstName && <Text color='crimson'>{ errors.firstName?.message }</Text>}
           <Input 
             placeholder='First name'
@@ -98,24 +94,19 @@ export const Signup = () => {
             variant='subtle' 
             {...register('confirmPassword')}/>
           <Box 
-          display='flex'
-          justifyContent='flex-start'
-          alignItems='flex-start'
-          gap={3}
-          >
-            <MotionButton
-              whileTap={{ scale: 0.9 }} 
-              whileHover={{ scale: 1.1, outline: 'none', border: 'none' }}
-              outline='none'
-              type='submit'
-              bg='dodgerblue'
-              >
+            display='flex'
+            justifyContent='flex-start'
+            alignItems='flex-start'
+            gap={3}
+            >
+            <GroupyButton>
               <FaArrowRightLong />
-                Sign up</MotionButton>
-              <Text>Already a member?</Text>
-              <Link to='/login'>Login</Link>
+                Sign user
+            </GroupyButton>
+            <Text>Already a member?</Text>
+            <Link to='/login'>Login</Link>
           </Box>
-            </Stack>
+        </Stack>
       </form>
       </Box>
     </Box>

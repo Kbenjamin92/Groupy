@@ -4,7 +4,8 @@ import { UserSignupType, GroupType } from '../interfaces'
 
 export const useRegister = () => {
     const [isLoading, setIsLoading] = useState(false);
-    const [message, setMessage] = useState();
+    const [message, setMessage] = useState('');
+    const [existingUserMessage, setExistingUserMessage] = useState('');
 
     const signupUrl = 'http://localhost:5001/signup';
     const groupCreationUrl = 'http://localhost:5001/group-creation';
@@ -16,10 +17,13 @@ export const useRegister = () => {
             const res = await axios.post(signupUrl, userData, {
                 headers: { "Content-Type": "application/json" },
             });
-            // handle message for existing user...
-            localStorage.setItem("message", res.data.message);
-            setMessage(res.data.message || 'User has been successfully created!');
+            if (res.data.message) {
+                localStorage.setItem('message', res.data.message);
+                setMessage(res.data.message || 'User has been successfully created!');
+            }
         } catch(err: any) {
+            const erroMsg = err.response?.data?.message || 'Something went wrong';
+            setExistingUserMessage(erroMsg)
             console.error(err.response?.data || err.message);
         }
         finally{
@@ -45,5 +49,5 @@ export const useRegister = () => {
     }
 
    
-  return ({ createNewUser, message, isLoading, createNewGroup })
+  return ({ createNewUser, message, existingUserMessage, isLoading, createNewGroup })
 }

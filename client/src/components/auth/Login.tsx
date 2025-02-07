@@ -3,14 +3,14 @@ import { UserLoginType } from '@/interfaces'
 import { Link } from 'react-router-dom'
 import { 
   Input, 
-  Stack, 
-  Button, 
+  Stack,  
   Heading, 
   Text, 
   Box,
   } from '@chakra-ui/react'
-  import { FaArrowRightLong } from "react-icons/fa6";
-  import { FaShareNodes } from "react-icons/fa6";
+import { FaArrowRightLong } from "react-icons/fa6";
+import { GroupyButton } from '../GroupyButton';
+import { GroupyTitle } from '../GroupyTitle';
 
 export const Login = () => {
   const { register, handleSubmit } = useForm<UserLoginType>();
@@ -24,22 +24,11 @@ export const Login = () => {
     minW="100vw"
   >
      <Box
-         //backgroundColor='#f5f9fc'
          boxShadow="md"
          borderRadius='5px'
          padding='60px'
       >
-    <Box
-      display='flex'
-      justifyContent='center'
-      h="120px"
-    >
-      <Stack direction='row'>
-        <FaShareNodes size={60} color='dodgerblue' />
-        <Heading as="h1">Groupy</Heading>
-        
-      </Stack>
-    </Box>
+    <GroupyTitle />
     <form>
       <Stack gap={4}>
         <Box 
@@ -63,12 +52,10 @@ export const Login = () => {
             alignItems='flex-start'
             gap={3}
           >
-            <Button 
-              type='submit'
-              bg='dodgerblue'
-              >
+            <GroupyButton>
               <FaArrowRightLong /> 
-                Login</Button>
+                Login
+            </GroupyButton>
             <Text>Not a member?</Text>
             <Link to='/signup'>Sign up</Link>
           </Box>

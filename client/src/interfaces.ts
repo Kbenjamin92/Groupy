@@ -17,3 +17,7 @@ export interface GroupType {
     groupDescription: string
     memberEmail?: string
 }
+
+export interface MotionButtonType {
+    children: React.ReactNode,
+}
