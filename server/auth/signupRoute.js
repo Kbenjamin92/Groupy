@@ -33,7 +33,7 @@ router.post('/signup',
             }
         });
         if (existingUser) {
-            res.status(400).json({ message: 'User already exists!' });
+            res.status(400).json({ message: 'User already exists Try again!' });
         }
         // hash the password
         const hashPassword = await bycrypt.hash(password, 10);

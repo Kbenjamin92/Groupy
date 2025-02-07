@@ -61,7 +61,7 @@ export const Signup = () => {
             >
             <Heading as='h1'>Sign up</Heading>
           </Box>
-          { existingUserMessage ? <Text color='crimson'>{existingUserMessage}</Text> : null }
+          { existingUserMessage ? <Text color='crimson'>{ existingUserMessage }</Text> : null }
           { errors.firstName && <Text color='crimson'>{ errors.firstName?.message }</Text>}
           <Input 
             placeholder='First name'
@@ -101,7 +101,7 @@ export const Signup = () => {
             >
             <GroupyButton>
               <FaArrowRightLong />
-                Sign user
+                Sign up
             </GroupyButton>
             <Text>Already a member?</Text>
             <Link to='/login'>Login</Link>
