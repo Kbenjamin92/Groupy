@@ -9,10 +9,14 @@ import { FaArrowRightLong } from "react-icons/fa6";
 import { GroupyTitle } from './GroupyTitle';
 import { useRegister } from '@/hooks/useRegister';
 import { GroupyButton } from './GroupyButton';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { createGroupSchema } from '@/schema/userSigupSchema';
 
 export const GroupCreation = () => {
     const { createNewGroup } = useRegister();
-    const { register, handleSubmit, reset } = useForm<GroupType>();
+    const { register, handleSubmit, reset, formState: { errors } } = useForm<GroupType>({
+        resolver: zodResolver(createGroupSchema)
+    });
     const mess = localStorage.getItem("message");
 
     const onSubmit: SubmitHandler<GroupType> = (data) => {
@@ -47,12 +51,14 @@ export const GroupCreation = () => {
             >
               <Text fontSize='2xl'>{ mess }</Text>
             </Box>
+                { errors.groupName && <Text color='crimson'>{ errors.groupName?.message }</Text>}
               <Input 
                 placeholder="What's the name of your group?"
                 variant='subtle'
                 w='25rem'
                 { ...register('groupName') }
                 />
+                { errors.groupDescription && <Text color='crimson'>{ errors.groupDescription?.message }</Text>}
                 <Textarea 
                   placeholder="Tell me more about your group..."
                   variant='subtle'
@@ -60,7 +66,7 @@ export const GroupCreation = () => {
                 { ...register('groupDescription') }
                 />
                 <Input 
-                  placeholder="Add an email to invite a member"
+                  placeholder="Add an email to invite a member, or do it later"
                   variant='subtle'
                   w='25rem'
                   { ...register('memberEmail') }

@@ -12,4 +12,10 @@ export const userSignupSchema = z.object({
     message: "Passwords don't match",
     path: ["confirmPassword"]
 });
+
+
+export const createGroupSchema = z.object({
+    groupName: z.string().min(1, { message: "Group must have a name" }),
+    groupDescription: z.string().min(5, { message: "Group description is required" })
+})
       
