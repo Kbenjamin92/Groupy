@@ -6,6 +6,7 @@ export const useRegister = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [message, setMessage] = useState('');
     const [existingUserMessage, setExistingUserMessage] = useState('');
+    const [showPassword, setShowPassword] = useState(false)
 
     const signupUrl = 'http://localhost:5001/signup';
     const groupCreationUrl = 'http://localhost:5001/group-creation';
@@ -47,7 +48,12 @@ export const useRegister = () => {
             setIsLoading(false);
         }
     }
-
-   
-  return ({ createNewUser, message, existingUserMessage, isLoading, createNewGroup })
+  return ({ 
+    createNewUser, 
+    message, 
+    existingUserMessage, 
+    isLoading, 
+    createNewGroup, 
+    showPassword, 
+    setShowPassword })
 }

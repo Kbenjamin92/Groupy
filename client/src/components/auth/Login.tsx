@@ -7,12 +7,18 @@ import {
   Heading, 
   Text, 
   Box,
+  Button,
   } from '@chakra-ui/react'
 import { FaArrowRightLong } from "react-icons/fa6";
 import { GroupyButton } from '../GroupyButton';
 import { GroupyTitle } from '../GroupyTitle';
+import { InputGroup } from '../ui/input-group';
+import { useRegister } from '@/hooks/useRegister';
 
 export const Login = () => {
+  const {  
+    showPassword, 
+    setShowPassword } = useRegister();
   const { register, handleSubmit } = useForm<UserLoginType>();
 
   return (
@@ -42,10 +48,31 @@ export const Login = () => {
           variant='subtle'
           w='25rem'
           {...register('username')}/>
-        <Input 
-          placeholder='Password'
-          variant='subtle' 
-          {...register('password')}/>
+          <Box 
+              display='flex' 
+              position='relative'
+              width='100%'
+              justifyContent='space-between'
+              >
+              <InputGroup>
+                <Input 
+                  placeholder='Password'
+                  variant='subtle'
+                  width='100%'
+                  pr='8rem'
+                  type={ !showPassword ? 'password' : 'text'} 
+                  {...register('password')}/>
+              </InputGroup>
+                <Button 
+                  type='button'
+                  size="sm"
+                  color='black'
+                  outline='none'
+                  border='none'
+                  onClick={() => setShowPassword(!showPassword)} 
+                  >{ showPassword ? 'Hide' : 'Show'}
+                </Button>
+              </Box>
           <Box
             display='flex'
             justifyContent='flex-start'

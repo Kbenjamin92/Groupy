@@ -4,6 +4,7 @@ import { UserSignupType } from '@/interfaces'
 import { Link } from 'react-router-dom'
 import { 
   Input, 
+  Button,
   Stack, 
   Heading, 
   Text, 
@@ -15,10 +16,16 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useNavigate } from 'react-router-dom';
 import { GroupyTitle } from '../GroupyTitle';
 import { GroupyButton } from '../GroupyButton';
+import { InputGroup } from '../ui/input-group';
 
 export const Signup = () => {
   const navigate = useNavigate();
-  const { createNewUser, message, existingUserMessage} = useRegister();
+  const { 
+    createNewUser, 
+    message, 
+    existingUserMessage, 
+    showPassword, 
+    setShowPassword } = useRegister();
   const { register, handleSubmit, reset, formState: { errors } } = useForm<UserSignupType>({
     resolver: zodResolver(userSignupSchema)
   });
@@ -66,32 +73,58 @@ export const Signup = () => {
           <Input 
             placeholder='First name'
             variant='subtle'
+            type='text'
             w='25rem'
             {...register('firstName')} />
             { errors.lastName && <Text color='crimson'>{ errors.lastName?.message }</Text>}
           <Input 
             placeholder='Last name'
-            variant='subtle'  
+            variant='subtle'
+            type='text'  
             {...register('lastName')}/>
             { errors.email && <Text color='crimson'>{ errors.email?.message }</Text>}
           <Input 
             placeholder='Email'
-            variant='subtle' 
+            variant='subtle'
+            type='email' 
             {...register('email')}/>
             { errors.username && <Text color='crimson'>{ errors.username?.message }</Text>}
           <Input 
             placeholder='Username'
-            variant='subtle' 
+            variant='subtle'
+            type='text' 
             {...register('username')}/>
             { errors.password && <Text color='crimson'>{ errors.password?.message }</Text>}
-          <Input 
-            placeholder='Password'
-            variant='subtle' 
-            {...register('password')}/>
+            <Box 
+              display='flex' 
+              position='relative'
+              width='100%'
+              justifyContent='space-between'
+              >
+              <InputGroup>
+                <Input 
+                  placeholder='Password'
+                  variant='subtle'
+                  width='100%'
+                  pr='8rem'
+                  type={ !showPassword ? 'password' : 'text'} 
+                  {...register('password')}/>
+              </InputGroup>
+                <Button 
+                  type='button'
+                  size="sm"
+                  color='black'
+                  outline='none'
+                  border='none'
+                  onClick={() => setShowPassword(!showPassword)} 
+                  >{ showPassword ? 'Hide' : 'Show'}
+                </Button>
+              </Box>
             { errors.confirmPassword && <Text color='crimson'>{ errors.confirmPassword?.message }</Text>}
           <Input 
             placeholder='Confirm Password'
             variant='subtle' 
+            type={ !showPassword ? 'password' : 'text'}
             {...register('confirmPassword')}/>
           <Box 
             display='flex'
