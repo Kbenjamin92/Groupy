@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useForm, SubmitHandler,  } from 'react-hook-form'
 import { Text, 
     Box, 
@@ -11,22 +12,29 @@ import { useRegister } from '@/hooks/useRegister';
 import { GroupyButton } from './GroupyButton';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { createGroupSchema } from '@/schema/userSigupSchema';
+import { useNavigate } from 'react-router-dom';
 
 export const GroupCreation = () => {
-    const { createNewGroup } = useRegister();
+    const navigate = useNavigate()
+    const { createNewGroup, message } = useRegister();
     const { register, handleSubmit, reset, formState: { errors } } = useForm<GroupType>({
         resolver: zodResolver(createGroupSchema)
     });
     const mess = localStorage.getItem("message");
 
-    const onSubmit: SubmitHandler<GroupType> = (data) => {
-        console.log(data)
+    const onSubmit: SubmitHandler<GroupType> = async (data) => {
+        await createNewGroup(data);
         reset({
             groupName: '',
             groupDescription: '',
             memberEmail: ''
         })
     }
+    useEffect(() => {
+        if (message === 'Your Group has been successfully created!') {
+            navigate('/')
+        }
+    })
   return (
     <>
       <Box 
@@ -87,7 +95,6 @@ export const GroupCreation = () => {
         </Box>
         </Box>
       </Box>
-      
     </>
   )
 }

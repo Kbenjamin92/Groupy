@@ -14,8 +14,9 @@ export interface UserLoginType {
 
 export interface GroupType {
     groupName: string,
-    groupDescription: string
-    memberEmail?: string
+    groupDescription: string,
+    memberEmail?: string,
+    created_by?: string
 }
 
 export interface MotionButtonType {

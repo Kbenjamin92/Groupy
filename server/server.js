@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 import signupRoute from './auth/signupRoute.js';
 import loginRoute from './auth/loginRoute.js';
 import logoutRoute from './auth/logoutRoute.js';
+import createGroupRoute from './group-creation/createGroupRoute.js'
 dotenv.config();
 
 const PORT = process.env.PORT || 5001;
@@ -16,6 +17,7 @@ app.use(express.json());
 app.post('/signup', signupRoute);
 app.post('/login', loginRoute);
 app.post('logout', logoutRoute);
+app.post('/group-creation', createGroupRoute);
 
 // app.delete('/:id', async (req, res) => {
 //     await prisma.users.delete({
@@ -27,8 +29,8 @@ app.post('logout', logoutRoute);
 // // testing endpoints
 app.get('/', async (req, res) => {
     try {
-        const users = await prisma.users.findMany()
-        res.status(200).json(users);
+        const groups = await prisma.groups.findMany()
+        res.status(200).json(groups);
     } catch(err) {
         console.error(err.message)
         res.status(500).send('Server Error')

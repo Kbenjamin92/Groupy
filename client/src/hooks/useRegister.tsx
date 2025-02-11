@@ -21,6 +21,7 @@ export const useRegister = () => {
             });
             if (res.data.message) {
                 localStorage.setItem('message', res.data.message);
+                localStorage.setItem('secondMessage', res.data.secondMessage)
                 setMessage(res.data.message || 'User has been successfully created!');
             }
         } catch(err: any) {
@@ -34,8 +35,11 @@ export const useRegister = () => {
     }
     // function to create a group after signing up a user
     const createNewGroup = async (groupData: GroupType) => {
-        //  handle group object with name and description and email
+        const { groupName, groupDescription } = groupData;
+
         if (groupData) {
+            localStorage.setItem('Group name:', groupName);
+            localStorage.setItem('Group description:', groupDescription);
             setBasicGroupObj(groupData)
         }
         setIsLoading(true)
@@ -43,7 +47,6 @@ export const useRegister = () => {
             const res = await axios.post(groupCreationUrl, groupData, {
                 headers: { "Content-Type": "application/json" },
             });
-            // manage email invitation as well
             console.log(res.data.message)
             setMessage(res.data.message || 'Your Group has been successfully created!');
         } catch(err: any) {

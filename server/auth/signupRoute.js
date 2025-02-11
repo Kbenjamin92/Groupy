@@ -49,7 +49,9 @@ router.post('/signup',
             await prisma.users.create({
                 data: newUser
         });
-            res.status(201).json({ message: `Welcome to Groupy ${newUser.firstName}!` });
+            res.status(201).json({ 
+                message: `Welcome to Groupy ${newUser.firstName}!`, 
+                secondMessage: `${newUser.firstName} ${newUser.lastName}`});
         } catch(error) {
             console.log('Unable to create new user', error.message);
             res.status(500).json(error.message)
