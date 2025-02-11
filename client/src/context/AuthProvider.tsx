@@ -1,4 +1,5 @@
 import { useState, createContext, useContext} from 'react'
+import { AuthProviderProps } from '@/interfaces';
 
 interface AuthContextType {
   isAuthenticated: boolean,
@@ -6,10 +7,6 @@ interface AuthContextType {
   logout: () => void
 }
 const AuthContext = createContext<AuthContextType | null>(null);
-
-interface AuthProviderProps {
-  children: React.ReactNode;
-}
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 

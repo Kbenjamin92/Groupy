@@ -22,3 +22,7 @@ export interface GroupType {
 export interface MotionButtonType {
     children: React.ReactNode,
 }
+
+export interface AuthProviderProps {
+    children: React.ReactNode;
+  }
