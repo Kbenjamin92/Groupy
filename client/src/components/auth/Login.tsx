@@ -32,16 +32,19 @@ export const Login = () => {
      <Box
          boxShadow="md"
          borderRadius='5px'
-         padding='60px'
+         padding='40px'
       >
     <GroupyTitle />
     <form>
       <Stack gap={4}>
         <Box 
           display='flex'
-          justifyContent='flex-start'
+          justifyContent='center'
           >
-          <Heading as='h1'>Login</Heading>
+          <Stack>
+            <Heading size='4xl'>Login</Heading>
+            <Text>Please fill in the form below to login.</Text>
+          </Stack>
         </Box>
         <Input 
           placeholder='Username'

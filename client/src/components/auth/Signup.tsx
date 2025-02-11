@@ -57,16 +57,19 @@ export const Signup = () => {
       <Box
          boxShadow='md'
          borderRadius='5px'
-         padding='60px'
+         padding='40px'
       >
       <GroupyTitle />
       <form onSubmit={handleSubmit(onSubmit)}>
         <Stack gap={4}>
           <Box 
             display='flex'
-            justifyContent='flex-start'
+            justifyContent='center'
             >
-            <Heading as='h1'>Sign up</Heading>
+            <Stack>
+              <Heading size='4xl' justifyContent='flex-start'>Sign up</Heading>
+              <Text>Please fill in the form below to continue.</Text>
+            </Stack>
           </Box>
           { existingUserMessage ? <Text color='crimson'>{ existingUserMessage }</Text> : null }
           { errors.firstName && <Text color='crimson'>{ errors.firstName?.message }</Text>}

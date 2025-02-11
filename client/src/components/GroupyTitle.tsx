@@ -7,7 +7,7 @@ export const GroupyTitle = () => {
     <Box
       display='flex'
       justifyContent='center'
-      h="120px"
+      h="100px"
     >
     <Stack direction='row'>
       <FaShareNodes size={60} color='dodgerblue' />
