@@ -7,7 +7,6 @@ export const useRegister = () => {
     const [message, setMessage] = useState('');
     const [existingUserMessage, setExistingUserMessage] = useState('');
     const [showPassword, setShowPassword] = useState(false);
-    const [basicGroupObj, setBasicGroupObj] = useState<GroupType>();
 
     const signupUrl = 'http://localhost:5001/signup';
     const groupCreationUrl = 'http://localhost:5001/group-creation';
@@ -36,18 +35,15 @@ export const useRegister = () => {
     // function to create a group after signing up a user
     const createNewGroup = async (groupData: GroupType) => {
         const { groupName, groupDescription } = groupData;
-
         if (groupData) {
             localStorage.setItem('Group name:', groupName);
             localStorage.setItem('Group description:', groupDescription);
-            setBasicGroupObj(groupData)
         }
         setIsLoading(true)
         try {
             const res = await axios.post(groupCreationUrl, groupData, {
                 headers: { "Content-Type": "application/json" },
             });
-            console.log(res.data.message)
             setMessage(res.data.message || 'Your Group has been successfully created!');
         } catch(err: any) {
             console.error(err.response?.data || err.message);
@@ -63,8 +59,6 @@ export const useRegister = () => {
     isLoading, 
     createNewGroup, 
     showPassword, 
-    setShowPassword,
-    basicGroupObj, 
-    setBasicGroupObj
+    setShowPassword
     })
 }
