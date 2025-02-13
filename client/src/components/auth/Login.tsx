@@ -15,7 +15,7 @@ import { GroupyTitle } from '../GroupyTitle';
 import { InputGroup } from '../ui/input-group';
 import { useRegister } from '@/hooks/useRegister';
 
-export const Login = () => {
+const Login = () => {
   const {  
     showPassword, 
     setShowPassword } = useRegister();
@@ -95,3 +95,5 @@ export const Login = () => {
   </Box>
   )
 }
+
+export default Login;

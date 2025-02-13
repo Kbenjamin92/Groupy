@@ -18,7 +18,7 @@ import { GroupyTitle } from '../GroupyTitle';
 import { GroupyButton } from '../GroupyButton';
 import { InputGroup } from '../ui/input-group';
 
-export const Signup = () => {
+const Signup = () => {
   const navigate = useNavigate();
   const { 
     createNewUser, 
@@ -149,3 +149,5 @@ export const Signup = () => {
     </Box>
   )
 }
+
+export default Signup;

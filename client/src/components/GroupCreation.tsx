@@ -14,7 +14,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { createGroupSchema } from '@/schema/userSigupSchema';
 import { useNavigate } from 'react-router-dom';
 
-export const GroupCreation = () => {
+const GroupCreation = () => {
     const navigate = useNavigate()
     const { createNewGroup, message } = useRegister();
     const { register, handleSubmit, reset, formState: { errors } } = useForm<GroupType>({
@@ -94,3 +94,5 @@ export const GroupCreation = () => {
     </>
   )
 }
+
+export default GroupCreation;
