@@ -58,6 +58,7 @@ export const Signup = () => {
          boxShadow='md'
          borderRadius='5px'
          padding='40px'
+         margin='10px'
       >
       <GroupyTitle />
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -77,7 +78,7 @@ export const Signup = () => {
             placeholder='First name'
             variant='subtle'
             type='text'
-            w='25rem'
+            w='100%'
             {...register('firstName')} />
             { errors.lastName && <Text color='crimson'>{ errors.lastName?.message }</Text>}
           <Input 
@@ -109,7 +110,7 @@ export const Signup = () => {
                   placeholder='Password'
                   variant='subtle'
                   width='100%'
-                  pr='8rem'
+                  pr='4rem'
                   type={ !showPassword ? 'password' : 'text'} 
                   {...register('password')}/>
               </InputGroup>

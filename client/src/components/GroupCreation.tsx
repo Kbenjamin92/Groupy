@@ -48,6 +48,8 @@ export const GroupCreation = () => {
           boxShadow='md'
           borderRadius='5px'
           padding='60px'
+          w='100%'
+          
         >
         <GroupyTitle />
         <Box>
@@ -63,21 +65,15 @@ export const GroupCreation = () => {
               <Input 
                 placeholder="What's the name of your group?"
                 variant='subtle'
-                w='25rem'
+                w='100%'
                 { ...register('groupName') }
                 />
                 { errors.groupDescription && <Text color='crimson'>{ errors.groupDescription?.message }</Text>}
                 <Textarea 
                   placeholder="Tell me more about your group..."
                   variant='subtle'
-                  w='25rem'
+                  w='100%'
                 { ...register('groupDescription') }
-                />
-                <Input 
-                  placeholder="Add an email to invite a member, or do it later"
-                  variant='subtle'
-                  w='25rem'
-                  { ...register('memberEmail') }
                 />
                 <Box
                   display='flex'

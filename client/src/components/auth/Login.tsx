@@ -49,7 +49,7 @@ export const Login = () => {
         <Input 
           placeholder='Username'
           variant='subtle'
-          w='25rem'
+          w='100%'
           {...register('username')}/>
           <Box 
               display='flex' 
@@ -62,7 +62,7 @@ export const Login = () => {
                   placeholder='Password'
                   variant='subtle'
                   width='100%'
-                  pr='8rem'
+                  pr='4rem'
                   type={ !showPassword ? 'password' : 'text'} 
                   {...register('password')}/>
               </InputGroup>
