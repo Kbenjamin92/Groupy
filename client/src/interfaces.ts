@@ -26,3 +26,9 @@ export interface MotionButtonType {
 export interface AuthProviderProps {
     children: React.ReactNode;
   }
+
+export interface AuthContextType {
+    isAuthenticated: boolean,
+    login: () => void,
+    logout: () => void
+  }

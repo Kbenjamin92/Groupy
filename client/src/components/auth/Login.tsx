@@ -14,12 +14,16 @@ import { GroupyButton } from '../GroupyButton';
 import { GroupyTitle } from '../GroupyTitle';
 import { InputGroup } from '../ui/input-group';
 import { useRegister } from '@/hooks/useRegister';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { userLoginSchema } from '@/schema/userSigupSchema';
 
 const Login = () => {
   const {  
     showPassword, 
     setShowPassword } = useRegister();
-  const { register, handleSubmit } = useForm<UserLoginType>();
+  const { register, handleSubmit, formState: { errors } } = useForm<UserLoginType>({
+    resolver: zodResolver(userLoginSchema)
+  });
 
   return (
     <Box 
@@ -32,7 +36,7 @@ const Login = () => {
      <Box
          boxShadow="md"
          borderRadius='5px'
-         padding='40px'
+         padding='45px'
       >
     <GroupyTitle />
     <form>
@@ -46,6 +50,7 @@ const Login = () => {
             <Text>Please fill in the form below to login.</Text>
           </Stack>
         </Box>
+        { errors.username && <Text color='crimson'>{ errors.username?.message }</Text>}
         <Input 
           placeholder='Username'
           variant='subtle'

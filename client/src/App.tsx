@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { MainPage } from './components/main/MainPage';
-import { Grid } from '@chakra-ui/react';
+import { Grid, Spinner } from '@chakra-ui/react';
 const LazySignup = React.lazy(() => import('./components/auth/Signup'))
 const LazyLogin = React.lazy(() => import('./components/auth/Login'))
 const LazyGroupCreation = React.lazy(() => import('./components/GroupCreation'))
@@ -21,7 +21,7 @@ const App = () => {
       }}
         w='100vw'
       >
-        <React.Suspense fallback='Loading...'>
+        <React.Suspense fallback={<Spinner />}>
           <Routes>
               <Route path="/signup" element={<LazySignup />} />
               <Route path="/login" element={<LazyLogin />} />
