@@ -16,14 +16,26 @@ import { InputGroup } from '../ui/input-group';
 import { useRegister } from '@/hooks/useRegister';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { userLoginSchema } from '@/schema/userSigupSchema';
+import { useAuth } from '@/hooks/useAuth';
 
 const Login = () => {
   const {  
     showPassword, 
     setShowPassword } = useRegister();
-  const { register, handleSubmit, formState: { errors } } = useForm<UserLoginType>({
+    const { loginUser } = useAuth();
+  const { register, handleSubmit, reset, formState: { errors } } = useForm<UserLoginType>({
     resolver: zodResolver(userLoginSchema)
   });
+
+  const onSubmit: SubmitHandler<UserLoginType> = async (data) => {
+    await loginUser(data)
+    reset({
+      username: '',
+      password: ''
+    })
+  }   
+
+  // create function to verify that the token is accessed and navigate to the home page
 
   return (
     <Box 
@@ -39,7 +51,7 @@ const Login = () => {
          padding='45px'
       >
     <GroupyTitle />
-    <form>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <Stack gap={4}>
         <Box 
           display='flex'

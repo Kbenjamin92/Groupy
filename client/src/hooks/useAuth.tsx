@@ -10,6 +10,7 @@ export const useAuth = () => {
 
 
   const context = useContext(AuthContext);
+
     if (!context) {
       throw Error('useAuth must be used within an AuthProvider')
     }
@@ -21,10 +22,11 @@ export const useAuth = () => {
       setLoading(true)
       try {
         const res = await axios.post(loginUrl, loginData, { withCredentials: true });
-        if (res.data) {
+        if (res.data.token) {
           setAccessToken(res.data.token)
         }
-        console.log(res.data)
+        if (accessToken) context.login();
+        console.log(res.data.token)
       } catch(err: any) {
           const errorMsg = err.response?.data?.message || 'Something went wrong!'
           localStorage.setItem('message', err.response?.data?.message)
@@ -34,5 +36,5 @@ export const useAuth = () => {
   }
 
 
-  return ({ loginUser, loginUrl, loading, errors })
+  return ({ loginUser, loading, errors })
 }
