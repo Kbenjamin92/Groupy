@@ -3,21 +3,25 @@ import cors  from 'cors';
 import prisma from './prisma.js'
 import dotenv from 'dotenv';
 import signupRoute from './auth/signupRoute.js';
-import loginRoute from './auth/loginRoute.js';
-import logoutRoute from './auth/logoutRoute.js';
+import authRoute from './auth/authRouth.js';
 import createGroupRoute from './group-creation/createGroupRoute.js'
 dotenv.config();
+import cookieParser from 'cookie-parser';
+import verifyToken from './auth/protectedAuthRoute.js';
 
 const PORT = process.env.PORT || 5001;
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use(cookieParser());
 
 app.post('/signup', signupRoute);
-app.post('/login', loginRoute);
-app.post('logout', logoutRoute);
+app.post('/login', authRoute);
 app.post('/group-creation', createGroupRoute);
+app.get('/protected', verifyToken, (req, res) => {
+    res.json({ message: `Hello, ${req.user.firstName}`})
+})
 
 // app.delete('/:id', async (req, res) => {
 //     await prisma.users.delete({
@@ -27,10 +31,10 @@ app.post('/group-creation', createGroupRoute);
 // })
 
 // // testing endpoints
-app.get('/', async (req, res) => {
+app.get('/signup', async (req, res) => {
     try {
-        const groups = await prisma.groups.findMany()
-        res.status(200).json(groups);
+        const users = await prisma.users.findMany()
+        res.status(200).json(users);
     } catch(err) {
         console.error(err.message)
         res.status(500).send('Server Error')

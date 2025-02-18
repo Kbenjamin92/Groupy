@@ -20,14 +20,13 @@ const GroupCreation = () => {
     const { register, handleSubmit, reset, formState: { errors } } = useForm<GroupType>({
         resolver: zodResolver(createGroupSchema)
     });
-    const mess = localStorage.getItem("message");
+    const userFirstName = localStorage.getItem("message");
 
     const onSubmit: SubmitHandler<GroupType> = async (data) => {
         await createNewGroup(data);
         reset({
             groupName: '',
             groupDescription: '',
-            memberEmail: ''
         })
     }
     useEffect(() => {
@@ -49,6 +48,7 @@ const GroupCreation = () => {
           borderRadius='5px'
           padding='60px'
           w='100%'
+          margin='0 15rem 0 15rem'
           
         >
         <GroupyTitle />
@@ -59,7 +59,7 @@ const GroupCreation = () => {
               display='flex'
               justifyContent='flex-start'
             >
-              <Text fontSize='2xl'>{ mess }</Text>
+              <Text fontSize='2xl'>{ userFirstName }</Text>
             </Box>
                 { errors.groupName && <Text color='crimson'>{ errors.groupName?.message }</Text>}
               <Input 

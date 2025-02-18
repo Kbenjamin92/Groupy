@@ -62,6 +62,7 @@ const Login = () => {
               width='100%'
               justifyContent='space-between'
               >
+              { errors.password && <Text color='crimson'>{ errors.password?.message }</Text>}
               <InputGroup>
                 <Input 
                   placeholder='Password'
