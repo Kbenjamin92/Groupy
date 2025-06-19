@@ -10,20 +10,15 @@ router.post('/group-creation',
         body('groupName').isString(),
         body('groupDescription').isString()
     ],
-
     async (req, res) => { 
-
         const errors = validationResult(req);
-
         if (!errors) {
             res.status(400).json({ errors: errors.arrays() })
         }
         const { groupName, groupDescription, memberEmail } = req.body;
-
         if (!groupName || !groupDescription) {
             res.status(400).json('Group name and description are required!')
         }
-
         const newGroup = {
             name: groupName,
             description: groupDescription,

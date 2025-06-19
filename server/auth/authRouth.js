@@ -6,7 +6,6 @@ import prisma from '../prisma.js';
 const router = express.Router();
 const SECRET_KEY = process.env.JWT_SECRET;
 
-
 router.post('/login', async (req, res) => {
     const { username, password } = req.body;
     // find user
@@ -20,15 +19,12 @@ router.post('/login', async (req, res) => {
     }
     // match password
     const isMatch = bcrypt.compare(password, user.password);
-
     if (!isMatch) {
         return res.status(400).json({ message: 'Incorrect Username and/or Password. Try again or reset your password.' })
     }
-
     if (user && isMatch) {
         // generate token
         const token = jwt.sign({ userId: user.id }, SECRET_KEY, { expiresIn: '1h' });
-       
         res.cookie('authToken', token, {
             httpOnly: true,
             secure: true,
@@ -39,9 +35,7 @@ router.post('/login', async (req, res) => {
     } else {
         res.status(401).json({ message: 'Invalid credentails'});
     }
-
 });
-
 // logout clear cookies
 router.post('/logout', async (req, res) => {
     res.clearCookie('authToken');

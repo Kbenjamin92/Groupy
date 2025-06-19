@@ -39,12 +39,12 @@ const Login = () => {
 
   return (
     <Box 
-    display='flex'
-    justifyContent='center'
-    alignItems='center'
-    minH="100vh"
-    minW="100vw"
-  >
+      display='flex'
+      justifyContent='center'
+      alignItems='center'
+      minH="100vh"
+      minW="100vw"
+    >
      <Box
          boxShadow="md"
          borderRadius='5px'

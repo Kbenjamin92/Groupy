@@ -7,7 +7,6 @@ const router = express.Router();
 router.post('/invite-member', (req, res) => {
 
 const appUrl = 'http://localhost:5173/signup';
-
 // handle sending email invite by creating transporter using Gmail
 const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
